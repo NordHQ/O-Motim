@@ -16,6 +16,8 @@
 
 ## 📋 Table of Contents
 
+- [Overview](#overview)
+- [Backend Setup](#-backend-setup)
 - [Features](#-features)
 - [Architecture](#-architecture)
 - [Project Structure](#-project-structure)
@@ -32,6 +34,73 @@
 - [Tech Stack](#-tech-stack)
 - [Available Scripts](#-available-scripts)
 - [License](#-license)
+
+---
+
+## Overview
+
+**O'MOTIM** is a modular reconnaissance platform consisting of two main components:
+
+1. **Frontend** (React + TypeScript) — User interface for scanning and results visualization
+2. **Backend** (Rust + Tauri) — Core scanning engine with 24 analysis modules
+
+This repository contains **only the frontend**. The backend must be set up separately.
+
+---
+
+## 🔌 Backend Setup
+
+### Where is the Backend?
+
+The Rust backend is located in a separate repository:
+
+**Repository:** [NordHQ/O-Motim-src-tauri](https://github.com/NordHQ/O-Motim-src-tauri)
+
+### Clone and Configure the Backend
+
+The backend should be cloned into the `src-tauri/` directory within this frontend repository:
+
+```bash
+# Clone the frontend (if you haven't already)
+git clone https://github.com/NordHQ/O-Motim.git
+cd O-Motim
+
+# Clone the backend into src-tauri/
+git clone https://github.com/NordHQ/O-Motim-src-tauri.git src-tauri
+```
+
+After cloning, your project structure should look like:
+
+```
+O-Motim/                    # Frontend repository
+├── src/                    # Frontend source code
+├── package.json            # Frontend dependencies
+├── vite.config.ts
+├── index.html
+├── src-tauri/              # ← Backend repository (cloned)
+│   ├── src/
+│   ├── Cargo.toml          # Rust dependencies
+│   ├── tauri.conf.json
+│   └── README.md
+└── ...
+```
+
+### Backend Download & Build
+
+Once the backend is in `src-tauri/`, the build system will automatically:
+
+1. **Download Rust dependencies** — First build may take 5-10 minutes
+2. **Compile Rust code** — `cargo build --release` runs automatically
+3. **Link with frontend** — Tauri bundles them together
+
+No separate build steps needed for the backend—everything is handled by `npm run tauri dev` or `npm run tauri build`.
+
+### Backend Requirements
+
+The backend requires:
+- **Rust** ≥ 1.70 (installed via [rustup](https://rustup.rs))
+- **Cargo** (comes with Rust)
+- Platform-specific build tools (see [Installation](#-installation) section)
 
 ---
 
@@ -82,9 +151,9 @@
 ## 📁 Project Structure
 
 ```
-MOTIM/
+O-Motim/
 ├── index.html                  # HTML entry point
-├── package.json                # Dependencies and scripts
+├── package.json                # Frontend dependencies and scripts
 ├── vite.config.ts              # Vite + Tauri configuration
 ├── tsconfig.json               # TypeScript configuration
 ├── tsconfig.node.json          # TS config for Vite
@@ -92,6 +161,11 @@ MOTIM/
 ├── postcss.config.js           # PostCSS (Tailwind + Autoprefixer)
 ├── templates/
 │   └── report.html             # HTML report template (handlebars-style)
+├── src-tauri/                  # ← Rust backend (separate repo)
+│   ├── src/
+│   ├── Cargo.toml              # Rust dependencies
+│   ├── tauri.conf.json         # Tauri configuration
+│   └── README.md               # Backend documentation
 └── src/
     ├── main.tsx                # React entry point
     ├── App.tsx                 # Root component, view routing
@@ -234,15 +308,23 @@ sudo dnf install -y \
 
 ### 2. Install Dependencies
 
-Clone the repository and install npm packages:
+Clone both repositories and install dependencies:
 
 ```bash
-cd MOTIM
+# Clone the frontend
+git clone https://github.com/NordHQ/O-Motim.git
+cd O-Motim
+
+# Clone the backend into src-tauri/
+git clone https://github.com/NordHQ/O-Motim-src-tauri.git src-tauri
+
+# Install frontend dependencies
 npm install
 ```
 
-> This command will install React, Tauri API, Vite, TypeScript, Tailwind CSS and all other dependencies.
+> This will install React, Tauri API, Vite, TypeScript, Tailwind CSS and all other frontend dependencies.
 > The `package-lock.json` file will be generated automatically.
+> Rust dependencies will be handled during the first build.
 
 ---
 
@@ -259,20 +341,18 @@ npm run dev
 > Vite will start a dev server on `http://localhost:1420`.
 > Components will render, but Tauri IPC calls won't work (backend missing).
 
-#### Full run with Tauri
+#### Full run with Tauri (with backend)
 
-To run the desktop application with Rust backend:
+To run the complete desktop application with Rust backend:
 
 ```bash
 npm run tauri dev
 ```
 
 > This will simultaneously run the Vite dev server and compile/launch the Tauri application.
-> On first run, Rust dependencies will be downloaded and compiled (may take several minutes).
-
-> ⚠️ **Important:** This repository contains only the frontend part.
-> The Rust backend (`src-tauri/`) with `start_scan`, `stop_scan`, `ai_chat` command implementations
-> must be connected separately.
+> On first run, Rust dependencies will be downloaded and compiled (may take 5-10 minutes).
+> 
+> **Before running this, ensure the backend is cloned:** `git clone https://github.com/NordHQ/O-Motim-src-tauri.git src-tauri`
 
 ---
 
@@ -371,13 +451,14 @@ Each stage is displayed in the sidebar with real-time status:
 
 ## 🖥 Usage
 
-1. **Start the application** (`npm run tauri dev`)
-2. **Enter target domain** in the "Target domain" field on Dashboard
-3. **Click "Start scan"** or press `Enter`
-4. **Monitor progress** in Pipeline — each stage updates in real-time
-5. **View results** — Results tab opens automatically after scan completes
-6. **Ask AI** — Go to AI tab to analyze findings
-7. **Generate report** — Report tab with JSON/HTML export
+1. **Set up the project** (frontend + backend as described above)
+2. **Start the application** (`npm run tauri dev`)
+3. **Enter target domain** in the "Target domain" field on Dashboard
+4. **Click "Start scan"** or press `Enter`
+5. **Monitor progress** in Pipeline — each stage updates in real-time
+6. **View results** — Results tab opens automatically after scan completes
+7. **Ask AI** — Go to AI tab to analyze findings
+8. **Generate report** — Report tab with JSON/HTML export
 
 ---
 
@@ -416,7 +497,7 @@ npm run dev        # Run Vite dev server (frontend only)
 npm run build      # Build frontend (tsc + vite build)
 npm run preview    # Preview production build
 npm run tauri      # Run Tauri CLI
-npm run tauri dev  # Full development mode
+npm run tauri dev  # Full development mode (with backend)
 npm run tauri build # Full desktop app build
 ```
 
