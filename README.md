@@ -17,6 +17,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Screenshots](#-screenshots)
 - [Backend Setup](#-backend-setup)
 - [Features](#-features)
 - [Architecture](#-architecture)
@@ -45,6 +46,26 @@
 2. **Backend** (Rust + Tauri) — Core scanning engine with 24 analysis modules
 
 This repository contains **only the frontend**. The backend must be set up separately.
+
+---
+
+## 📸 Screenshots
+
+### 1. Dashboard — Main entry point with quick stats
+
+The dashboard displays an overview of your scan results with quick statistics cards showing discovered subdomains, active hosts, CVEs found, secrets detected, vulnerabilities, API endpoints, directories, crawled pages, and more. Dark theme with orange accent color (#c84b0e).
+
+---
+
+### 2. Results — Subdomain discovery and detailed findings
+
+The Results tab shows a comprehensive table of discovered subdomains with HTTP probe results. Tab-based interface provides access to different finding categories (Subdomains, HTTP Probe, Tech, Headers, Secrets, CVEs, Backdoors, Dirs, CORS, Methods, etc.). Real-time results as scanning progresses.
+
+---
+
+### 3. Scan Pipeline — Real-time scanning progress with live log
+
+During an active scan, the interface shows the pipeline with all 24 stages of analysis. Each stage displays its status (Running, Complete, Pending) with counts of findings. The live log at the bottom shows real-time execution with timestamps. Status bar shows CPU usage (50%), RAM consumption, thread count, and elapsed time.
 
 ---
 
