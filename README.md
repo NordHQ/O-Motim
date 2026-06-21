@@ -451,3 +451,10 @@ npm run tauri build # Полная сборка desktop-приложения
   <strong>O'MOTIM</strong> · Модульная reconnaissance-платформа<br>
   <span style="color:#7a7a99">For authorized security testing only.</span>
 </p>
+
+<div align="center">
+Built with ❤️ and 🦀 by NordHQ
+
+If this helped you, leave a ⭐ — it means a lot!
+
+</div>
