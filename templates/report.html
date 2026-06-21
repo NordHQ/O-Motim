@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>O'MOTIM — {{domain}}</title>
+    <style>
+      :root {
+        --bg: #08080f;
+        --surface: #0e0e1a;
+        --raised: #14141f;
+        --border: #1f1f30;
+        --accent: #c84b0e;
+        --text: #f0f0f5;
+        --muted: #7a7a99;
+        --critical: #ff3333;
+        --high: #ff7700;
+        --medium: #ffbb00;
+        --low: #3388ff;
+        --info: #33bbff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        padding: 32px;
+      }
+      header {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+      }
+      h1 { margin: 0; font-size: 28px; letter-spacing: -0.5px; }
+      h1 .accent { color: var(--accent); }
+      h2 {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+        margin: 32px 0 12px;
+      }
+      .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 16px;
+      }
+      .card .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+      .card .value { font-size: 24px; font-weight: 600; margin-top: 4px; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      th { text-align: left; color: var(--muted); font-weight: 500; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+      td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+      tr:hover td { background: var(--surface); }
+      .sev {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 6px;
+        color: #000;
+      }
+      .sev.critical { background: var(--critical); color: #fff; }
+      .sev.high { background: var(--high); }
+      .sev.medium { background: var(--medium); }
+      .sev.low { background: var(--low); color: #fff; }
+      .sev.info { background: var(--info); }
+      footer { margin-top: 40px; color: var(--muted); font-size: 11px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><span class="accent">◈</span> O'MOTIM Report</h1>
+      <div class="meta">Target: <strong>{{domain}}</strong> · Generated {{date}} · Elapsed {{elapsed}}</div>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <div class="grid">
+        <div class="card"><div class="label">Subdomains</div><div class="value">{{total_subdomains}}</div></div>
+        <div class="card"><div class="label">Alive hosts</div><div class="value">{{alive_hosts}}</div></div>
+        <div class="card"><div class="label">Critical CVEs</div><div class="value" style="color: var(--critical)">{{critical}}</div></div>
+        <div class="card"><div class="label">Secrets</div><div class="value" style="color: var(--high)">{{secrets}}</div></div>
+        <div class="card"><div class="label">High</div><div class="value" style="color: var(--high)">{{high}}</div></div>
+        <div class="card"><div class="label">Medium</div><div class="value" style="color: var(--medium)">{{medium}}</div></div>
+        <div class="card"><div class="label">Low</div><div class="value" style="color: var(--low)">{{low}}</div></div>
+        <div class="card"><div class="label">Technologies</div><div class="value">{{tech_count}}</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Subdomains</h2>
+      <table>
+        <thead><tr><th>Hostname</th></tr></thead>
+        <tbody>{{subdomain_rows}}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Technologies</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Category</th><th>Version</th><th>Confidence</th></tr></thead>
+        <tbody>{{tech_rows}}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>HTTP Probe</h2>
+      <table>
+        <thead><tr><th>URL</th><th>Status</th><th>Title</th><th>Time</th></tr></thead>
+        <tbody>{{http_rows}}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>CVE Matches</h2>
+      <table>
+        <thead><tr><th>CVE</th><th>CVSS</th><th>Description</th><th>Affected</th></tr></thead>
+        <tbody>{{cve_rows}}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Exposed Secrets</h2>
+      <table>
+        <thead><tr><th>Type</th><th>Preview</th><th>Location</th></tr></thead>
+        <tbody>{{secret_rows}}</tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Header Issues</h2>
+      <table>
+        <thead><tr><th>Severity</th><th>Issue</th><th>URL</th><th>Fix</th></tr></thead>
+        <tbody>{{header_rows}}</tbody>
+      </table>
+    </section>
+
+    <footer>Generated by O'MOTIM — for authorized security testing only.</footer>
+  </body>
+</html>
