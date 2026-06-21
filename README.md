@@ -1,75 +1,57 @@
 # ◈ O'MOTIM (BETA)
 
-> Модульная reconnaissance-платформа для авторизованного тестирования безопасности.
+> Modular reconnaissance platform for authorized security testing.
 >
-> Дискавери поддоменов, HTTP-пробинг, фингерпринтинг технологий, анализ заголовков,
-> поиск секретов и CVE-матчинг — всё в едином контексте, с AI-ассистентом на базе Ollama.
+> Subdomain discovery, HTTP probing, technology fingerprinting, header analysis,
+> secret detection, and CVE matching — all in one unified context, with an AI assistant powered by Ollama.
 
 ![Tauri](https://img.shields.io/badge/Tauri-v2-blue?logo=tauri&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38bdf8?logo=tailwindcss&logoColor=white)
 
----
-
-## 📋 Содержание
-
-- [Возможности](#-возможности)
-- [Скриншоты (описание интерфейса)](#-скриншоты)
-- [Архитектура](#-архитектура)
-- [Структура проекта](#-структура-проекта)
-- [Требования](#-требования)
-- [Установка](#-установка)
-  - [1. Подготовка системы](#1-подготовка-системы)
-  - [2. Установка зависимостей](#2-установка-зависимостей)
-  - [3. Запуск в режиме разработки](#3-запуск-в-режиме-разработки)
-  - [4. Сборка приложения](#4-сборка-приложения)
-- [Конфигурация Ollama AI](#-конфигурация-ollama-ai)
-- [Конвейер сканирования (Pipeline)](#-конвейер-сканирования-pipeline)
-- [Использование](#-использование)
-- [Экспорт отчётов](#-экспорт-отчётов)
-- [Технологический стек](#-технологический-стек)
-- [Доступные скрипты](#-доступные-скрипты)
-- [Лицензия](#-лицензия)
+**Tags:** `osint` `pentest` `reconnaissance` `react` `cybersecurity` `security-tools` `hacking`
 
 ---
 
-## ✨ Возможности
+## 📋 Table of Contents
 
-| Модуль | Описание |
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+  - [1. System Setup](#1-system-setup)
+  - [2. Install Dependencies](#2-install-dependencies)
+  - [3. Development Mode](#3-development-mode)
+  - [4. Build Application](#4-build-application)
+- [Ollama AI Configuration](#-ollama-ai-configuration)
+- [Scanning Pipeline](#-scanning-pipeline)
+- [Usage](#-usage)
+- [Export Reports](#-export-reports)
+- [Tech Stack](#-tech-stack)
+- [Available Scripts](#-available-scripts)
+- [License](#-license)
+
+---
+
+## ✨ Features
+
+| Module | Description |
 |--------|----------|
-| **Subdomain Discovery** | Обнаружение поддоменов через crt.sh, DNS-over-HTTPS (DoH), брутфорс |
-| **DNS Resolver** | Разрешение DNS-записей для обнаруженных хостов |
-| **HTTP Probe** | HTTP-пробинг с 50 воркерами, приоритет HTTPS |
-| **Fingerprint** | Определение технологий — 26 сигнатур |
-| **Headers Analysis** | Анализ security-заголовков (CSP, HSTS, X-Frame и др.) |
-| **Secrets Scanner** | Поиск утечек по 12 паттернам (API-ключи, токены и т.д.) |
-| **CVE Match** | Сопоставление обнаруженных технологий с базой NVD |
-| **AI Assistant** | Локальный AI-чат на базе Ollama — анализ находок, векторы атак, рекомендации по исправлению |
-| **Reports** | Генерация отчётов в JSON и HTML |
+| **Subdomain Discovery** | Discover subdomains via crt.sh, DNS-over-HTTPS (DoH), brute force |
+| **DNS Resolver** | Resolve DNS records for discovered hosts |
+| **HTTP Probe** | HTTP probing with 50 workers, HTTPS-first priority |
+| **Fingerprint** | Detect technologies — 26 signatures |
+| **Headers Analysis** | Analyze security headers (CSP, HSTS, X-Frame, etc.) |
+| **Secrets Scanner** | Find leaks using 12 patterns (API keys, tokens, etc.) |
+| **CVE Match** | Match detected technologies against NVD database |
+| **AI Assistant** | Local AI chat powered by Ollama — finding analysis, attack vectors, remediation advice |
+| **Reports** | Generate JSON and HTML reports |
 
 ---
 
-## 📸 Скриншоты
-
-> Интерфейс выполнен в тёмной теме с акцентным оранжевым цветом (`#c84b0e`).
-
-### Основные экраны:
-
-1. **Dashboard** — стартовая страница с полем ввода целевого домена и карточками шагов pipeline
-<img width="1440" height="900" alt="Снимок экрана — 2026-06-21 в 18 12 19" src="https://github.com/user-attachments/assets/f742e5aa-15a2-4402-8bf0-755b2ac5ecbc" />
-
-2. **Pipeline** — отображение 8 этапов сканирования в реальном времени с прогресс-баром и live-логом
-<img width="1440" height="900" alt="Снимок экрана — 2026-06-21 в 18 19 47" src="https://github.com/user-attachments/assets/0611f417-2d84-413a-99f9-4139c9698896" />
-
-
-3. **Results** — табличный просмотр результатов: поддомены, HTTP-пробинг, технологии, заголовки, секреты, CVE
-<img width="1440" height="900" alt="Снимок экрана — 2026-06-21 в 18 12 30" src="https://github.com/user-attachments/assets/64b9faaf-8b54-47e3-ad72-f6e5cd66ed43" />
-
-
----
-
-## 🏗 Архитектура
+## 🏗 Architecture
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -89,90 +71,90 @@
 └──────────────────────────────────────────────┘
 ```
 
-**Как это работает:**
-1. Frontend вызывает Tauri IPC-команды (`invoke`) — `start_scan`, `stop_scan`, `ai_chat`, `check_ollama`, `get_system_stats`
-2. Rust-бэкенд выполняет сканирование и отправляет события через Tauri event system (`pipeline-event`, `scan-complete`)
-3. Zustand-стор обновляется событиями в реальном времени
-4. React-компоненты рендерят UI на основе стора
+**How it works:**
+1. Frontend calls Tauri IPC commands (`invoke`) — `start_scan`, `stop_scan`, `ai_chat`, `check_ollama`, `get_system_stats`
+2. Rust backend performs scanning and sends events via Tauri event system (`pipeline-event`, `scan-complete`)
+3. Zustand store updates in real-time from events
+4. React components render UI based on store state
 
 ---
 
-## 📁 Структура проекта
+## 📁 Project Structure
 
 ```
 MOTIM/
-├── index.html                  # Точка входа HTML
-├── package.json                # Зависимости и скрипты
-├── vite.config.ts              # Конфигурация Vite + Tauri
-├── tsconfig.json               # Конфигурация TypeScript
-├── tsconfig.node.json          # TS-конфиг для Vite
-├── tailwind.config.js          # Тёмная тема, кастомные цвета
+├── index.html                  # HTML entry point
+├── package.json                # Dependencies and scripts
+├── vite.config.ts              # Vite + Tauri configuration
+├── tsconfig.json               # TypeScript configuration
+├── tsconfig.node.json          # TS config for Vite
+├── tailwind.config.js          # Dark theme, custom colors
 ├── postcss.config.js           # PostCSS (Tailwind + Autoprefixer)
 ├── templates/
-│   └── report.html             # HTML-шаблон отчёта (handlebars-style)
+│   └── report.html             # HTML report template (handlebars-style)
 └── src/
     ├── main.tsx                # React entry point
-    ├── App.tsx                 # Root-компонент, роутинг по views
-    ├── index.css               # Tailwind + кастомные стили
+    ├── App.tsx                 # Root component, view routing
+    ├── index.css               # Tailwind + custom styles
     ├── store/
-    │   └── scanStore.ts        # Zustand-стор (состояние сканирования)
+    │   └── scanStore.ts        # Zustand store (scan state)
     ├── hooks/
-    │   ├── useScan.ts          # Хук запуска/остановки сканирования
-    │   ├── useAI.ts            # Хук AI-чата (Ollama)
-    │   └── useSystemStats.ts   # Хук системной статистики (CPU/RAM)
+    │   ├── useScan.ts          # Hook for start/stop scan
+    │   ├── useAI.ts            # Hook for AI chat (Ollama)
+    │   └── useSystemStats.ts   # Hook for system stats (CPU/RAM)
     └── components/
         ├── Layout/
-        │   ├── Topbar.tsx      # Верхняя навигация
-        │   ├── Sidebar.tsx     # Боковая панель этапов pipeline
-        │   └── StatusBar.tsx   # Статус-бар (CPU, RAM, threads, elapsed)
+        │   ├── Topbar.tsx      # Top navigation
+        │   ├── Sidebar.tsx     # Sidebar with pipeline stages
+        │   └── StatusBar.tsx   # Status bar (CPU, RAM, threads, elapsed)
         ├── Dashboard/
-        │   ├── Dashboard.tsx   # Главная страница
-        │   ├── TargetInput.tsx # Поле ввода целевого домена
-        │   └── QuickStats.tsx  # Карточки быстрой статистики
+        │   ├── Dashboard.tsx   # Main page
+        │   ├── TargetInput.tsx # Target domain input field
+        │   └── QuickStats.tsx  # Quick stats cards
         ├── Pipeline/
-        │   ├── PipelineView.tsx # Представление конвейера
-        │   ├── StageCard.tsx   # Карточка этапа сканирования
-        │   └── LiveLog.tsx     # Автопрокручивающийся лог
+        │   ├── PipelineView.tsx # Pipeline representation
+        │   ├── StageCard.tsx   # Scan stage card
+        │   └── LiveLog.tsx     # Auto-scrolling log
         ├── Results/
-        │   ├── ResultsTabs.tsx  # Табы результатов
-        │   ├── SubdomainTable.tsx # Таблица поддоменов
-        │   ├── HttpResults.tsx   # Результаты HTTP-пробинга
-        │   ├── TechCards.tsx     # Карточки технологий
-        │   ├── CveTable.tsx      # Таблица CVE
-        │   ├── SecretsPanel.tsx  # Панель секретов
+        │   ├── ResultsTabs.tsx  # Result tabs
+        │   ├── SubdomainTable.tsx # Subdomain table
+        │   ├── HttpResults.tsx   # HTTP probing results
+        │   ├── TechCards.tsx     # Technology cards
+        │   ├── CveTable.tsx      # CVE table
+        │   ├── SecretsPanel.tsx  # Secrets panel
         ├── AI/
-        │   ├── AIAssistant.tsx  # Боковая панель AI (сворачиваемая)
-        │   └── AIChat.tsx       # Полноэкранный AI-чат
+        │   ├── AIAssistant.tsx  # AI sidebar (collapsible)
+        │   └── AIChat.tsx       # Full-screen AI chat
         └── Report/
-            ├── ExportPanel.tsx    # Экспорт JSON/HTML
-            └── ReportPreview.tsx  # Предпросмотр отчёта
+            ├── ExportPanel.tsx    # JSON/HTML export
+            └── ReportPreview.tsx  # Report preview
 ```
 
 ---
 
-## 📦 Требования
+## 📦 Requirements
 
-| Инструмент | Версия | Зачем |
-|------------|--------|-------|
-| **Node.js** | ≥ 18 | Выполнение JavaScript, npm |
-| **npm** | ≥ 9 | Менеджер пакетов (поставляется с Node.js) |
-| **Rust** | ≥ 1.70 | Tauri-бэкенд (rustup) |
-| **Tauri CLI** | v2 | Сборка и запуск Tauri-приложения |
-| **Ollama** | 最新 | AI-ассистент (опционально) |
+| Tool | Version | Purpose |
+|------|---------|---------|
+| **Node.js** | ≥ 18 | Execute JavaScript, npm |
+| **npm** | ≥ 9 | Package manager (ships with Node.js) |
+| **Rust** | ≥ 1.70 | Tauri backend (rustup) |
+| **Tauri CLI** | v2 | Build and run Tauri app |
+| **Ollama** | Latest | AI assistant (optional) |
 
-### Поддерживаемые ОС
+### Supported OS
 
-- **macOS** (x86_64 и aarch64/Apple Silicon)
+- **macOS** (x86_64 and aarch64/Apple Silicon)
 - **Linux** (x86_64)
 - **Windows** (x86_64)
 
 ---
 
-## 🚀 Установка
+## 🚀 Installation
 
-### 1. Подготовка системы
+### 1. System Setup
 
-#### Установка Node.js
+#### Install Node.js
 
 **macOS (Homebrew):**
 ```bash
@@ -186,15 +168,15 @@ sudo apt-get install -y nodejs
 ```
 
 **Windows:**
-Скачайте установщик с [nodejs.org](https://nodejs.org) (LTS-версия).
+Download the installer from [nodejs.org](https://nodejs.org) (LTS version).
 
-Проверьте:
+Verify:
 ```bash
-node -v    # v20.x.x или выше
-npm -v     # 10.x.x или выше
+node -v    # v20.x.x or higher
+npm -v     # 10.x.x or higher
 ```
 
-#### Установка Rust
+#### Install Rust
 
 **macOS / Linux:**
 ```bash
@@ -203,18 +185,18 @@ source "$HOME/.cargo/env"
 ```
 
 **Windows:**
-Скачайте rustup-init.exe с [rust-lang.org](https://rustup.rs).
+Download rustup-init.exe from [rust-lang.org](https://rustup.rs).
 
-Проверьте:
+Verify:
 ```bash
-rustc --version   # 1.70+ или выше
+rustc --version   # 1.70+ or higher
 cargo --version
 ```
 
-#### Системные зависимости Tauri
+#### Tauri System Dependencies
 
-**macOS — дополнительные зависимости не требуются.**
-Убедитесь, что установлен Xcode Command Line Tools:
+**macOS — no additional dependencies required.**
+Make sure Xcode Command Line Tools are installed:
 ```bash
 xcode-select --install
 ```
@@ -246,82 +228,82 @@ sudo dnf install -y \
   librsvg2-devel
 ```
 
-**Windows — дополнительные зависимости не требуются** (все необходимое входит в MSVC Build Tools).
+**Windows — no additional dependencies required** (all needed tools included in MSVC Build Tools).
 
 ---
 
-### 2. Установка зависимостей
+### 2. Install Dependencies
 
-Клонируйте репозиторий и установите npm-пакеты:
+Clone the repository and install npm packages:
 
 ```bash
 cd MOTIM
 npm install
 ```
 
-> Эта команда установит React, Tauri API, Vite, TypeScript, Tailwind CSS и все остальные зависимости.
-> Файл `package-lock.json` будет сгенерирован автоматически.
+> This command will install React, Tauri API, Vite, TypeScript, Tailwind CSS and all other dependencies.
+> The `package-lock.json` file will be generated automatically.
 
 ---
 
-### 3. Запуск в режиме разработки
+### 3. Development Mode
 
-#### Только frontend (без Tauri-бэкенда)
+#### Frontend only (without Tauri backend)
 
-Если вы хотите посмотреть/отладить только React-интерфейс:
+If you want to view/debug only the React interface:
 
 ```bash
 npm run dev
 ```
 
-> Vite запустит dev-сервер на `http://localhost:1420`.
-> Компоненты будут рендериться, но Tauri IPC-вызовы не будут работать (бэкенд отсутствует).
+> Vite will start a dev server on `http://localhost:1420`.
+> Components will render, but Tauri IPC calls won't work (backend missing).
 
-#### Полный запуск с Tauri
+#### Full run with Tauri
 
-Для запуска desktop-приложения с Rust-бэкендом:
+To run the desktop application with Rust backend:
 
 ```bash
 npm run tauri dev
 ```
 
-> Это одновременно запустит Vite dev-сервер и скомпилирует/запустит Tauri-приложение.
-> При первом запуске Rust-зависимости будут скачаны и скомпилированы (может занять несколько минут).
+> This will simultaneously run the Vite dev server and compile/launch the Tauri application.
+> On first run, Rust dependencies will be downloaded and compiled (may take several minutes).
 
-> ⚠️ **Важно:** Данный репозиторий содержит только frontend-часть.
-> Rust-бэкенд (`src-tauri/`) с реализацией команд `start_scan`, `stop_scan`, `ai_chat` и т.д.
-> должен быть подключён отдельно.
+> ⚠️ **Important:** This repository contains only the frontend part.
+> The Rust backend (`src-tauri/`) with `start_scan`, `stop_scan`, `ai_chat` command implementations
+> must be connected separately.
 
 ---
 
-### 4. Сборка приложения
+### 4. Build Application
 
-#### Сборка frontend (только булды):
+#### Build frontend only:
 
 ```bash
 npm run build
 ```
 
-> Результат: папка `dist/` с оптимизированными HTML/CSS/JS файлами.
+> Result: `dist/` folder with optimized HTML/CSS/JS files.
 
-#### Полная сборка desktop-приложения:
+#### Full desktop application build:
 
 ```bash
 npm run tauri build
 ```
 
-> Создаст установочный пакет в `src-tauri/target/release/bundle/`:
+> Creates installer in `src-tauri/target/release/bundle/`:
 > - macOS: `.dmg` / `.app`
 > - Linux: `.deb` / `.AppImage`
 > - Windows: `.msi` / `.exe`
 
 ---
 
-## 🤖 Конфигурация Ollama AI
+## 🤖 Ollama AI Configuration
 
-AI-ассистент работает через локальную модель [Ollama](https://ollama.ai).
+The AI assistant works through a local [Ollama](https://ollama.ai) model.
 
-### Установка Ollama
+### Install Ollama
 
 **macOS:**
 ```bash
@@ -334,27 +316,27 @@ curl -fsSL https://ollama.ai/install.sh | sh
 ```
 
 **Windows:**
-Скачайте установщик с [ollama.ai](https://ollama.ai).
+Download installer from [ollama.ai](https://ollama.ai).
 
-### Запуск модели
+### Run a Model
 
 ```bash
-# Запустить Ollama-сервер
+# Start Ollama server
 ollama serve
 
-# В другом терминале — скачать и запустить модель
+# In another terminal — download and run a model
 ollama pull llama3
 ollama run llama3
 ```
 
-После запуска Ollama-сервера приложение автоматически обнаружит его и отобразит статус **«Connected»** в AI-панели.
+After starting the Ollama server, the application will automatically detect it and show **"Connected"** status in the AI panel.
 
-> AI-ассистент **опционален** — приложение полностью работает и без него.
-> Все остальные модули сканирования не зависят от Ollama.
+> The AI assistant is **optional** — the application works fully without it.
+> All other scanning modules are independent of Ollama.
 
 ---
 
-## ⚙ Конвейер сканирования (Pipeline)
+## ⚙ Scanning Pipeline
 
 ```
 ┌─────────────────────┐
@@ -378,77 +360,77 @@ ollama run llama3
 └─────────────────────┘
 ```
 
-Каждый этап отображается в sidebar с реальным статусом:
-- `pending` — ожидание
-- `running` — выполнение (анимация)
-- `done` — завершён
-- `error` — ошибка
-- `skipped` — пропущен
+Each stage is displayed in the sidebar with real-time status:
+- `pending` — waiting
+- `running` — executing (animated)
+- `done` — completed
+- `error` — error occurred
+- `skipped` — skipped
 
 ---
 
-## 🖥 Использование
+## 🖥 Usage
 
-1. **Запустите приложение** (`npm run tauri dev`)
-2. **Введите целевой домен** в поле «Target domain» на Dashboard
-3. **Нажмите «Start scan»** или нажмите `Enter`
-4. **Следите за прогрессом** в Pipeline — каждый этап обновляется в реальном времени
-5. **Просмотрите результаты** — после завершения сканирования автоматически откроется вкладка Results
-6. **Спросите AI** — перейдите на вкладку AI для анализа находок
-7. **Сгенерируйте отчёт** — вкладка Report с экспортом в JSON/HTML
+1. **Start the application** (`npm run tauri dev`)
+2. **Enter target domain** in the "Target domain" field on Dashboard
+3. **Click "Start scan"** or press `Enter`
+4. **Monitor progress** in Pipeline — each stage updates in real-time
+5. **View results** — Results tab opens automatically after scan completes
+6. **Ask AI** — Go to AI tab to analyze findings
+7. **Generate report** — Report tab with JSON/HTML export
 
 ---
 
-## 📊 Экспорт отчётов
+## 📊 Export Reports
 
-| Формат | Описание |
+| Format | Description |
 |--------|----------|
-| **JSON** | Полный контекст сканирования (поддомены, HTTP, технологии, CVE, секреты) |
-| **HTML** | Стилизованный отчёт с тёмной темой, таблицами и summary-карточками |
+| **JSON** | Full scan context (subdomains, HTTP, technologies, CVE, secrets) |
+| **HTML** | Styled report with dark theme, tables and summary cards |
 
-Экспорт доступен на вкладке **Report** через кнопку **Show Export**.
+Export is available on the **Report** tab via the **Show Export** button.
 
 ---
 
-## 🛠 Технологический стек
+## 🛠 Tech Stack
 
-| Категория | Технология |
-|-----------|------------|
-| **Фреймворк** | React 18 |
-| **Язык** | TypeScript 5 |
-| **Сборка** | Vite 5 |
+| Category | Technology |
+|----------|------------|
+| **Framework** | React 18 |
+| **Language** | TypeScript 5 |
+| **Build** | Vite 5 |
 | **Desktop** | Tauri v2 (Rust) |
-| **Стилизация** | Tailwind CSS 3.4 |
+| **Styling** | Tailwind CSS 3.4 |
 | **State Management** | Zustand 4.5 |
-| **Анимации** | Framer Motion 11 |
-| **Графики** | Recharts 2.12 |
-| **Иконки** | Lucide React 0.383 |
-| **AI** | Ollama (локальная LLM) |
+| **Animations** | Framer Motion 11 |
+| **Charts** | Recharts 2.12 |
+| **Icons** | Lucide React 0.383 |
+| **AI** | Ollama (local LLM) |
 
 ---
 
-## 📜 Доступные скрипты
+## 📜 Available Scripts
 
 ```bash
-npm run dev        # Запустить Vite dev-сервер (frontend only)
-npm run build      # Собрать frontend (tsc + vite build)
-npm run preview    # Предпросмотр production-билда
-npm run tauri      # Запустить Tauri CLI
-npm run tauri dev  # Полный запуск в режиме разработки
-npm run tauri build # Полная сборка desktop-приложения
+npm run dev        # Run Vite dev server (frontend only)
+npm run build      # Build frontend (tsc + vite build)
+npm run preview    # Preview production build
+npm run tauri      # Run Tauri CLI
+npm run tauri dev  # Full development mode
+npm run tauri build # Full desktop app build
 ```
 
 ---
 
-## ⚖ Лицензия
+## ⚖ License
 
-Этот проект предназначен **только для авторизованного тестирования безопасности**.
-Использование без явного разрешения владельца целевых ресурсов запрещено.
+This project is intended **for authorized security testing only**.
+Use without explicit permission from the target resource owner is prohibited.
 
 ---
 
 <p align="center">
-  <strong>O'MOTIM</strong> · Модульная reconnaissance-платформа<br>
+  <strong>O'MOTIM</strong> · Modular reconnaissance platform<br>
   <span style="color:#7a7a99">For authorized security testing only.</span>
 </p>
 
